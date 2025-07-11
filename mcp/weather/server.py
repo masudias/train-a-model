@@ -18,8 +18,6 @@ mcp = FastMCP("weather")
 NWS_API_BASE = "https://api.weather.gov"
 USER_AGENT = "weather-app/1.0"
 
-VIRUS_UNIPROT_REST_API_BASE = "https://rest.uniprot.org/uniprotkb"
-
 
 async def handle_invoke(request: Request) -> JSONResponse:
     body = await request.json()
@@ -119,25 +117,6 @@ Forecast: {period['detailedForecast']}
         forecasts.append(forecast)
 
     return "\n---\n".join(forecasts)
-
-@mcp.tool()
-async def get_protein(uniprot_code:str ) -> str:
-    """Get UniProt code for a virus.
-
-    Args:
-        uniprot_code: UniProt code (accession) for the virus protein 
-    """
-    url = f"{VIRUS_UNIPROT_REST_API_BASE}/{uniprot_code}"
-    data = await make_nws_request(url)
-
-    if not data or "features" not in data:
-        return "Unable to fetch alerts or no alerts found."
-
-    if not data["features"]:
-        return "No active alerts for this state."
-
-    alerts = [format_alert(feature) for feature in data["features"]]
-    return "\n---\n".join(alerts)
 
 @mcp.prompt()
 def get_initial_prompts() -> list[base.Message]:
