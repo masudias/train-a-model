@@ -28,4 +28,6 @@ tqdm==4.67.1
 typing-inspection==0.4.1
 typing_extensions==4.14.0
 uvicorn==0.35.0
+biopython==1.85
+numpy==2.3.1
 

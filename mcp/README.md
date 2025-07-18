@@ -36,13 +36,32 @@ Then install the rqquired packages:
 pip install -r requirements.txt
 ```
 
-Lastly, run the server code:
+Run the server code:
 
 ```bash
 python run boltz/server.py --host localhost --port 8080
 ```
 
+In Order to run MCP client code, set environment variable first. 
+
+#### Setting Up Environment Variables
+
+Before running the MCP client code, make sure to configure the required environment variables.
+To make these variables available across terminal sessions, create a file named `.env` inside the `boltz` directory and add the following:
+
+```bash
+OPENAI_API_KEY=sk-proj-XXX
+MCP_SSE_URL=http://localhost:8080/sse
+```
+
+
 ### Basic Usage
+ 
+```bash
+python boltz/client.py
+```
+
+If you have credit in your `OPENAI_API_KEY`, chat in the terminal. You can start with a simply question like "Tell me details about `SARS-CoV-2` virus."
 
 Although an LLM client (e.g., `mcp-client`) is typically needed to test our MCP server, relying on an external `API_KEY` from services like OpenAI or Anthropic can slow down local development. To reduce this dependency, we've added a simple REST interface that allows us to test and develop our tools **without requiring access to a live MCP client**. This makes it easier to create and validate test cases before exposing the service to real LLMs. The REST service is simply a wrapper around the `mcp` tool. 
 
